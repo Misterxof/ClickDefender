@@ -10,6 +10,9 @@ public class EnemyController : MonoBehaviour
     GameObject player;
     Rigidbody2D playerRigidBody;
 
+    // Scripts
+    PlayerController playerController;
+
     // Enemy
     public ObjectType type = ObjectType.Enemy;
     public float healthPoints = 100f;
@@ -26,6 +29,7 @@ public class EnemyController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         playerRigidBody = player.GetComponent<Rigidbody2D>();
+        playerController = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -73,6 +77,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnMouseDown()
+    {
+        if (Input.GetMouseButtonDown(0)){
+            healthPoints -= playerController.getPlayerDamage();
+            if (healthPoints <= 0)
+                Die();
+        }
+    }
+
     public void OnHealthDamage(float damage)
     {
         healthPoints -= damage;
@@ -88,7 +101,7 @@ public class EnemyController : MonoBehaviour
     public void OnCollisionWithPlayer(Collider2D collision, GameObject impacter)
     {
         impacter.GetComponent<PlayerController>().OnHealthDamage(10);
-        Debug.Log("Health " + impacter.GetComponent<PlayerController>().PlayerStats.PlayerHealthPoints);
+        Debug.Log("Health " + impacter.GetComponent<PlayerController>().playerStats.PlayerHealthPoints);
     }
 
     void Die()

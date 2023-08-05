@@ -20,6 +20,8 @@ namespace Possibilities
         private int m_Level = 1;
         [SerializeField]
         private int knowledgePoints = 1;
+        [SerializeField]
+        private float damage = 1f;
 
         [Header("Attributes")]
         public List<PlayerAttributes> Attributes = new List<PlayerAttributes>();
@@ -73,6 +75,12 @@ namespace Possibilities
         {
             get { return knowledgePoints; }
             set { knowledgePoints = value; }
+        }
+
+        public float PlayerDamage
+        {
+            get { return damage; }
+            set { damage = value; }
         }
 
         // Start is called before the first frame update

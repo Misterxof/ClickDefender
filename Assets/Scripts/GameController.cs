@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour, GameCallbacks
     {
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         playerController.setGameCallbacks(this);
+        //GameObject.FindWithTag("DamageText").text
     }
 
     // Update is called once per frame
