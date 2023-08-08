@@ -12,24 +12,33 @@ public class EnemyController : MonoBehaviour
 
     // Scripts
     PlayerController playerController;
+    EnemyBase enemyStats;
 
     // Enemy
     public ObjectType type = ObjectType.Enemy;
-    public float healthPoints = 100f;
-    public float damage = 10f;
-    public float walkSpeed = 2f;
-    public float speedLimiter = 0.7f;
-    public float enemyExp = 10f;
+    public float healthPoints = 0;
+    public float damage;
+    public float walkSpeed;
+    public float speedLimiter;
+    public float enemyExp;
     float inputHorizontal;
     float inputVertitcal;
 
     // Start is called before the first frame update 
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        enemyStats = GetComponent<EnemyBase>();
         player = GameObject.Find("Player");
+
+        _rigidbody = GetComponent<Rigidbody2D>();
         playerRigidBody = player.GetComponent<Rigidbody2D>();
         playerController = player.GetComponent<PlayerController>();
+
+        healthPoints = enemyStats.EnemyHealth;
+        damage = enemyStats.EnemyDamage;
+        enemyExp = enemyStats.EnemyExpierence;
+        walkSpeed = enemyStats.EnemyMoveSpeed;
+        speedLimiter = enemyStats.EnemyMoveSpeedLimit;
     }
 
     // Update is called once per frame
