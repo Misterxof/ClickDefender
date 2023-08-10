@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class ExperienceBar : MonoBehaviour
 {
-    private Image experiencneBar;
+    private Image _experiencneBar;
 
     public ExperienceBar(float experience, float maxExperience)
     {
-        experiencneBar = GameObject.FindWithTag("ExperienceBar").GetComponent<Image>();
+        _experiencneBar = GameObject.FindWithTag("ExperienceBar").GetComponent<Image>();
         OnExperienceChange(experience, maxExperience);
     }
 
     public void OnExperienceChange(float experience, float maxExperience)
     {
-        experiencneBar.fillAmount = experience / maxExperience;
+        _experiencneBar.fillAmount = experience / maxExperience;
     }
 }

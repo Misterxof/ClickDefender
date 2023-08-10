@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public Animator animator;
-    public Transform attackPoint;
-    public LayerMask enemyLayers;
+    private float _nextAttackTime = 0f;
 
-    public float attackRange = 0.5f;
-    public float damage = 50f;
+    public Animator Animator;
+    public Transform AttackPoint;
+    public LayerMask EnemyLayers;
 
-    public float attackRate = 2f;
-    float nextAttackTime = 0f;
+    public float AttackRange = 0.5f;
+    public float Damage = 50f;
+
+    public float AttackRate = 2f;
 
 
     // Update is called once per frame
     void Update()
     {
-        animator = gameObject.GetComponent<Animator>();
-        attackPoint = GameObject.Find("/Player/AttackPoint").transform;
+        Animator = gameObject.GetComponent<Animator>();
+        AttackPoint = GameObject.Find("/Player/AttackPoint").transform;
     }
 
     public void AttackButtonOnCLick()
     {
-        if (Time.time >= nextAttackTime)
+        if (Time.time >= _nextAttackTime)
         {
             Attack();
-            nextAttackTime = Time.time + 1f / attackRate;
+            _nextAttackTime = Time.time + 1f / AttackRate;
         }
     }
 
@@ -36,24 +35,24 @@ public class PlayerCombat : MonoBehaviour
         EnemyController enemyC = Utils.FindClosest(this.transform);
         Debug.Log("NEAREST " + Utils.FindClosest(this.transform).name);
         Vector3 newPos = Utils.LerpByDistance(this.transform.position, enemyC.transform.position, 0.1f);
-        attackPoint.transform.position = newPos;
+        AttackPoint.transform.position = newPos;
         //attackPoint.transform.position = Vector3.Lerp(this.transform.position, enemyC.transform.position, 0.1f);
-        animator.SetTrigger("Attack");
+        Animator.SetTrigger("Attack");
 
-        Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(AttackPoint.position, AttackRange, EnemyLayers);
 
         foreach (Collider2D enemy in hittedEnemies)
         {
-            enemy.GetComponent<EnemyController>().OnHealthDamage(damage);
+            enemy.GetComponent<EnemyController>().OnHealthDamage(Damage);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-       
-        if (attackPoint == null)
+
+        if (AttackPoint == null)
             return;
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
     }
 }

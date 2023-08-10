@@ -25,22 +25,22 @@ namespace Possibilities
             if (SkillDisplayObject)
             {
                 SkillDisplay skillDisplay = SkillDisplayObject.GetComponent<SkillDisplay>();
-                skillDisplay.skillName.text = Name;
+                skillDisplay.SkillName.text = Name;
 
-                if (skillDisplay.skillDescription)
-                    skillDisplay.skillDescription.text = Descriptiton;
+                if (skillDisplay.SkillDescription)
+                    skillDisplay.SkillDescription.text = Descriptiton;
 
-                if (skillDisplay.skillIcon)
-                    skillDisplay.skillIcon.sprite = Icon;
+                if (skillDisplay.SkillIcon)
+                    skillDisplay.SkillIcon.sprite = Icon;
 
-                if (skillDisplay.skillPointsNeeded)
-                    skillDisplay.skillPointsNeeded.text = KnowledgePointsNeeded.ToString();
+                if (skillDisplay.SkillPointsNeeded)
+                    skillDisplay.SkillPointsNeeded.text = KnowledgePointsNeeded.ToString();
 
-                if (skillDisplay.skillAttribute)
-                    skillDisplay.skillAttribute.text = AffectetedAttributes[0].attribute.ToString();
+                if (skillDisplay.SkillAttribute)
+                    skillDisplay.SkillAttribute.text = AffectetedAttributes[0].Attribute.ToString();
 
-                if (skillDisplay.skillAttributeAmount)
-                    skillDisplay.skillAttributeAmount.text = "+" + AffectetedAttributes[0].amount.ToString();
+                if (skillDisplay.SkillAttributeAmount)
+                    skillDisplay.SkillAttributeAmount.text = "+" + AffectetedAttributes[0].Amount.ToString();
 
             }
         }
@@ -83,9 +83,9 @@ namespace Possibilities
                 List<PlayerAttributes>.Enumerator playerAttributes = player.Attributes.GetEnumerator();
                 while (playerAttributes.MoveNext())
                 {
-                    if(string.Equals(attributes.Current.attribute.name, playerAttributes.Current.attribute.name))
+                    if(string.Equals(attributes.Current.Attribute.name, playerAttributes.Current.Attribute.name))
                     {
-                        playerAttributes.Current.amount += attributes.Current.amount;
+                        playerAttributes.Current.Amount += attributes.Current.Amount;
                         i++;
                     }
                 }

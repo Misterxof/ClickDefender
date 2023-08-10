@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c1a3a1201e479469693e23b10b5605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDamageText: {fileID: 1424001521}
+  PlayerDamageText: {fileID: 1424001521}
 --- !u!1 &320447023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,11 +1387,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209fe9bb69e86aa48a442fcdf174b766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystick: {fileID: 1681017522}
-  playerStats: {fileID: 0}
-  type: 0
-  walkSpeed: 2
-  speedLimiter: 0.7
+  Joystick: {fileID: 1681017522}
+  PlayerStats: {fileID: 0}
+  Type: 0
+  _walkSpeed: 2
+  _speedLimiter: 0.7
 --- !u!95 &483636647
 Animator:
   serializedVersion: 5
@@ -1470,14 +1470,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1fbc06f77e01341a67b406ebbaf108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  attackPoint: {fileID: 542847886}
-  enemyLayers:
+  Animator: {fileID: 0}
+  AttackPoint: {fileID: 0}
+  EnemyLayers:
     serializedVersion: 2
     m_Bits: 0
-  attackRange: 0.2
-  damage: 50
-  attackRate: 2
+  AttackRange: 0.5
+  Damage: 50
+  AttackRate: 2
 --- !u!114 &483636650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1490,22 +1490,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb724bf83c66716499d8f2dee28da1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
-  m_PlayerExperience: 0
-  m_Level: 1
-  knowledgePoints: 1
-  damage: 1
+  _healthPoints: 100
+  _playerExperience: 0
+  _level: 0
+  _knowledgePoints: 1
+  _damage: 1
   Attributes:
-  - attribute: {fileID: 11400000, guid: dc49cb4f34ba7484b8b6832ef91ffeae, type: 2}
-    amount: 10
-  - attribute: {fileID: 11400000, guid: 18b3816a2d939734489e515994e2826e, type: 2}
-    amount: 10
-  - attribute: {fileID: 11400000, guid: 92265c0225b6fac4ab88b6b68e69ec6b, type: 2}
-    amount: 10
-  - attribute: {fileID: 11400000, guid: 01e1f3a481a914f43b6a6f844f403e03, type: 2}
-    amount: 10
-  - attribute: {fileID: 11400000, guid: 1391e686e0f46d34f86624f3e714c397, type: 2}
-    amount: 10
+  - Attribute: {fileID: 0}
+    Amount: 0
+  - Attribute: {fileID: 0}
+    Amount: 0
+  - Attribute: {fileID: 0}
+    Amount: 0
+  - Attribute: {fileID: 0}
+    Amount: 0
+  - Attribute: {fileID: 0}
+    Amount: 0
   PlayerSkills: []
 --- !u!114 &483636651
 MonoBehaviour:
@@ -1520,7 +1520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 0}
-  _Canvas: {fileID: 289086335}
+  _canvas: {fileID: 0}
 --- !u!1 &515438064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,8 +1786,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f75cba59fd4219b49a8efa7041dc8219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: -10}
-  myPlay: {fileID: 483636645}
+  Offset: {x: 0, y: 0, z: -1}
+  MyPlay: {fileID: 483636645}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,8 +1800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793e8eae258496940b03daea580e0b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 2063047272}
-  playerController: {fileID: 0}
+  GameOverScreen: {fileID: 2063047272}
+  PlayerController: {fileID: 0}
 --- !u!1 &542847885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3656,9 +3656,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6599f2e401de2164ea6d201dbb597900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueSlimePrefab: {fileID: 8063426465842603440, guid: d99f3a7e016c0814d8929dbefe403104, type: 3}
-  blueSlimeSpawnInterval: 1
-  player: {fileID: 483636642}
+  _blueSlimePrefab: {fileID: 8063426465842603440, guid: d99f3a7e016c0814d8929dbefe403104, type: 3}
+  _blueSlimeSpawnInterval: 1
+  _player: {fileID: 483636642}
 --- !u!1 &1151820274
 GameObject:
   m_ObjectHideFlags: 0
@@ -4473,14 +4473,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6619fd7db24c42648b0b04deb0425b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: 16f07df20fe5a45459a158b26229ccde, type: 2}
-  skillName: {fileID: 838893385}
-  skillDescription: {fileID: 0}
-  skillIcon: {fileID: 1436078315}
-  skillAttribute: {fileID: 719206636}
-  skillAttributeAmount: {fileID: 2056129962}
-  skillPointsNeeded: {fileID: 935986858}
-  m_playerHandler: {fileID: 0}
+  Skill: {fileID: 0}
+  SkillName: {fileID: 0}
+  SkillDescription: {fileID: 0}
+  SkillIcon: {fileID: 0}
+  SkillAttribute: {fileID: 0}
+  SkillAttributeAmount: {fileID: 0}
+  SkillPointsNeeded: {fileID: 0}
+  _playerHandler: {fileID: 0}
 --- !u!114 &1609655492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5407,7 +5407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fc48f3716bfa04b8f106e050154c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsText: {fileID: 388012689}
+  PointsText: {fileID: 388012689}
 --- !u!1 &2064216115
 GameObject:
   m_ObjectHideFlags: 0

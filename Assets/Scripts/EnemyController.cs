@@ -6,101 +6,103 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Components
-    Rigidbody2D _rigidbody;
-    GameObject player;
-    Rigidbody2D playerRigidBody;
+    private Rigidbody2D _rigidbody2D;
+    private GameObject _player;
+    private Rigidbody2D _playerRigidBody;
 
     // Scripts
-    PlayerController playerController;
-    EnemyBase enemyStats;
+    private PlayerController _playerController;
+    private EnemyBase _enemyStats;
 
     // Enemy
-    public ObjectType type = ObjectType.Enemy;
-    public float healthPoints = 0;
-    public float damage;
-    public float walkSpeed;
-    public float speedLimiter;
-    public float enemyExp;
-    float inputHorizontal;
-    float inputVertitcal;
+    private float _inputHorizontal;
+    private float _inputVertitcal;
+
+    public ObjectType Type = ObjectType.Enemy;
+    public float HealthPoints = 0;
+    public float Damage;
+    public float WalkSpeed;
+    public float SpeedLimiter;
+    public float EnemyExp;
+    
 
     // Start is called before the first frame update 
     void Start()
     {
-        enemyStats = GetComponent<EnemyBase>();
-        player = GameObject.Find("Player");
+        _enemyStats = GetComponent<EnemyBase>();
+        _player = GameObject.Find("Player");
 
-        _rigidbody = GetComponent<Rigidbody2D>();
-        playerRigidBody = player.GetComponent<Rigidbody2D>();
-        playerController = player.GetComponent<PlayerController>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _playerRigidBody = _player.GetComponent<Rigidbody2D>();
+        _playerController = _player.GetComponent<PlayerController>();
 
-        healthPoints = enemyStats.EnemyHealth;
-        damage = enemyStats.EnemyDamage;
-        enemyExp = enemyStats.EnemyExpierence;
-        walkSpeed = enemyStats.EnemyMoveSpeed;
-        speedLimiter = enemyStats.EnemyMoveSpeedLimit;
+        HealthPoints = _enemyStats.EnemyHealth;
+        Damage = _enemyStats.EnemyDamage;
+        EnemyExp = _enemyStats.EnemyExpierence;
+        WalkSpeed = _enemyStats.EnemyMoveSpeed;
+        SpeedLimiter = _enemyStats.EnemyMoveSpeedLimit;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float directitonX = _rigidbody.position.x - playerRigidBody.position.x;
-        float directitonY = _rigidbody.position.y - playerRigidBody.position.y;
+        float directitonX = _rigidbody2D.position.x - _playerRigidBody.position.x;
+        float directitonY = _rigidbody2D.position.y - _playerRigidBody.position.y;
 
         if (directitonX > 0 && directitonY > 0)
         {
-            inputHorizontal = -1f;
-            inputVertitcal = -1f;
+            _inputHorizontal = -1f;
+            _inputVertitcal = -1f;
         } else if (directitonX < 0 && directitonY < 0)
         {
-            inputHorizontal = 1f;
-            inputVertitcal = 1f;
+            _inputHorizontal = 1f;
+            _inputVertitcal = 1f;
         } else if (directitonX > 0 && directitonY < 0)
         {
-            inputHorizontal = -1f;
-            inputVertitcal = 1f;
+            _inputHorizontal = -1f;
+            _inputVertitcal = 1f;
         }
         else if (directitonX < 0 && directitonY > 0)
         {
-            inputHorizontal = 1f;
-            inputVertitcal = -1f;
+            _inputHorizontal = 1f;
+            _inputVertitcal = -1f;
         }
 
     }
 
     private void FixedUpdate()
     {
-        if (inputHorizontal != 0 || inputVertitcal != 0)
+        if (_inputHorizontal != 0 || _inputVertitcal != 0)
         {
-            if (inputHorizontal != 0 && inputVertitcal != 0)
+            if (_inputHorizontal != 0 && _inputVertitcal != 0)
             {
-                inputHorizontal *= speedLimiter;
-                inputVertitcal *= speedLimiter;
+                _inputHorizontal *= SpeedLimiter;
+                _inputVertitcal *= SpeedLimiter;
             }
 
-            _rigidbody.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertitcal * walkSpeed);
+            _rigidbody2D.velocity = new Vector2(_inputHorizontal * WalkSpeed, _inputVertitcal * WalkSpeed);
         }
         else
         {
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody2D.velocity = Vector2.zero;
         }
     }
 
     private void OnMouseDown()
     {
         if (Input.GetMouseButtonDown(0)){
-            healthPoints -= playerController.getPlayerDamage();
-            if (healthPoints <= 0)
+            HealthPoints -= _playerController.getPlayerDamage();
+            if (HealthPoints <= 0)
                 Die();
         }
     }
 
     public void OnHealthDamage(float damage)
     {
-        healthPoints -= damage;
-        Debug.Log("Hitted " + gameObject.name + " health " + healthPoints);
+        HealthPoints -= damage;
+        Debug.Log("Hitted " + gameObject.name + " health " + HealthPoints);
 
-        if (healthPoints <= 0)
+        if (HealthPoints <= 0)
         {
             Debug.Log("Dead " + gameObject.name);
             Die();
@@ -110,12 +112,12 @@ public class EnemyController : MonoBehaviour
     public void OnCollisionWithPlayer(Collider2D collision, GameObject impacter)
     {
         impacter.GetComponent<PlayerController>().OnHealthDamage(10);
-        Debug.Log("Health " + impacter.GetComponent<PlayerController>().playerStats.PlayerHealthPoints);
+        Debug.Log("Health " + impacter.GetComponent<PlayerController>().PlayerStats.PlayerHealthPoints);
     }
 
     void Die()
     {
-        player.GetComponent<PlayerController>().OnExperienceChange(enemyExp);
+        _player.GetComponent<PlayerController>().OnExperienceChange(EnemyExp);
         Destroy(this.gameObject);
         // animation
 

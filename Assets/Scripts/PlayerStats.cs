@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,21 +6,22 @@ namespace Possibilities
 {
     public class PlayerStats : MonoBehaviour
     {
-        private float maxHealthPoints = 100f;
-        private float maxExperiencePoints = 100f;   // for new level
+        private float _maxHealthPoints = 100f;
+        private float _maxExperiencePoints = 100f;   // for new level
+        private float _levelsBeforeScaleCounter = 0;
 
         [Header("Player Stats")]
-        
+
         [SerializeField]
-        private float healthPoints = 100f;
+        private float _healthPoints = 100f;
         [SerializeField]
-        private float m_PlayerExperience = 0;
+        private float _playerExperience = 0;
         [SerializeField]
-        private int m_Level = 1;
+        private int _level = 0;
         [SerializeField]
-        private int knowledgePoints = 1;
+        private int _knowledgePoints = 1;
         [SerializeField]
-        private float damage = 1f;
+        private float _damage = 1f;
 
         [Header("Attributes")]
         public List<PlayerAttributes> Attributes = new List<PlayerAttributes>();
@@ -31,27 +31,34 @@ namespace Possibilities
 
         public float PlayerMaxHealthPoints
         {
-            set { maxHealthPoints = value; }
-            get { return maxHealthPoints; }
+            set { _maxHealthPoints = value; }
+            get { return _maxHealthPoints; }
         }
 
         public float PlayerMaxExperiencePoints
         {
-            set { maxExperiencePoints = value; }
-            get { return maxExperiencePoints; }  
+            set { _maxExperiencePoints = value; }
+            get { return _maxExperiencePoints; }
+        }
+
+        public float LevelsBeforeScaleCounter
+        {
+            get { return _levelsBeforeScaleCounter; }
+            set { _levelsBeforeScaleCounter = value; }
         }
 
         public float PlayerHealthPoints
         {
-            get { return healthPoints; }
-            set { healthPoints = value; }
+            get { return _healthPoints; }
+            set { _healthPoints = value; }
         }
 
         public float PlayerExperiencePoints
         {
-            get { return m_PlayerExperience; }
-            set {
-                m_PlayerExperience = value;
+            get { return _playerExperience; }
+            set
+            {
+                _playerExperience = value;
 
                 if (onExperienceChange != null)
                     onExperienceChange();
@@ -60,10 +67,10 @@ namespace Possibilities
 
         public int PlayerLevel
         {
-            get { return m_Level; }
+            get { return _level; }
             set
             {
-                m_Level = value;
+                _level = value;
 
                 //  for subscribers
                 if (onLevelChange != null)
@@ -73,20 +80,20 @@ namespace Possibilities
 
         public int PlayerKnowledgePoints
         {
-            get { return knowledgePoints; }
-            set { knowledgePoints = value; }
+            get { return _knowledgePoints; }
+            set { _knowledgePoints = value; }
         }
 
         public float PlayerDamage
         {
-            get { return damage; }
-            set { damage = value; }
+            get { return _damage; }
+            set { _damage = value; }
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            maxExperiencePoints = healthPoints;
+            _maxExperiencePoints = _healthPoints;
         }
 
         // Update is called once per frame

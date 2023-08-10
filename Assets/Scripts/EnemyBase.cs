@@ -2,47 +2,47 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
 {
-    private float health = 1f;
-    private float damage = 1f;
-    private float expierence = 10f;
-    private float moveSpeed = 1f;
-    private float moveSpeedLimit = 0.7f;
+    private float _health = 1f;
+    private float _damage = 1f;
+    private float _expierence = 10f;
+    private float _moveSpeed = 1f;
+    private float _moveSpeedLimit = 0.7f;
 
-    private GameObject prefab;
+    private GameObject _prefab;
 
     public float EnemyHealth
     {
-        get { return health; }
-        set { health = value; }
+        get { return _health; }
+        set { _health = value; }
     }
 
     public float EnemyDamage
     {
-        get { return damage; }
-        set { damage = value; }
+        get { return _damage; }
+        set { _damage = value; }
     }
 
     public float EnemyExpierence
     {
-        get { return expierence; }
-        set { expierence = value; }
+        get { return _expierence; }
+        set { _expierence = value; }
     }
 
     public float EnemyMoveSpeed
     {
-        get { return moveSpeed; }
-        set { moveSpeed = value; }
+        get { return _moveSpeed; }
+        set { _moveSpeed = value; }
     }
 
     public float EnemyMoveSpeedLimit
     {
-        get { return moveSpeedLimit; }
-        set { moveSpeedLimit = value; }
+        get { return _moveSpeedLimit; }
+        set { _moveSpeedLimit = value; }
     }
 
     public GameObject EnemyPrefab
     {
-        get { return prefab; }
-        set { prefab = value; }
+        get { return _prefab; }
+        set { _prefab = value; }
     }
 }

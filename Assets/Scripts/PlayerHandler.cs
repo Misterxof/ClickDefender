@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Possibilities
@@ -9,8 +7,8 @@ namespace Possibilities
         public PlayerStats PlayerStats;
 
         [SerializeField]
-        private Canvas _Canvas;
-        private bool showCanvas;
+        private Canvas _canvas;
+        private bool _showCanvas;
 
         private void Start()
         {
@@ -22,10 +20,10 @@ namespace Possibilities
         {
             if (Input.GetKeyDown("tab"))
             {
-                if (_Canvas)
+                if (_canvas)
                 {
-                    showCanvas = !showCanvas;
-                    _Canvas.gameObject.SetActive(showCanvas);
+                    _showCanvas = !_showCanvas;
+                    _canvas.gameObject.SetActive(_showCanvas);
                 }
             }
         }

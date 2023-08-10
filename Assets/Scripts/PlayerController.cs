@@ -1,87 +1,120 @@
 using Possibilities;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     // Components
-    Rigidbody2D _rigidbody;
-    [SerializeField] FixedJoystick _joystick;
-    private HealthBar healthBar;
-    private ExperienceBar experienceBar;
-    public PlayerStats playerStats;
+    Rigidbody2D Rigidbody;
+    [SerializeField] FixedJoystick Joystick;
+    private HealthBar _healthBar;
+    private ExperienceBar _experienceBar;
+    public PlayerStats PlayerStats;
 
     // Callbacks
-    private GameCallbacks gameCallbacks;
+    private GameCallbacks _gameCallbacks;
 
     // Player
-    public ObjectType type = ObjectType.Player;
-    public float walkSpeed = 2f;
-    public float speedLimiter = 0.7f;
-    float inputHorizontal;
-    float inputVertitcal;
+    public ObjectType Type = ObjectType.Player;
+    public float _walkSpeed = 2f;
+    public float _speedLimiter = 0.7f;
+    private float _inputHorizontal;
+    private float _inputVertitcal;
 
     // Start is called before the first frame update 
     void Start()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        playerStats = GetComponent<PlayerStats>();
-        healthBar = new HealthBar(playerStats.PlayerHealthPoints, playerStats.PlayerMaxHealthPoints);
-        experienceBar = new ExperienceBar(playerStats.PlayerExperiencePoints, playerStats.PlayerMaxExperiencePoints);
+        Rigidbody = GetComponent<Rigidbody2D>();
+        PlayerStats = GetComponent<PlayerStats>();
+        _healthBar = new HealthBar(PlayerStats.PlayerHealthPoints, PlayerStats.PlayerMaxHealthPoints);
+        _experienceBar = new ExperienceBar(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
     }
 
     // Update is called once per frame
     void Update()
     {
-        inputHorizontal = _joystick.Horizontal;
-        inputVertitcal = _joystick.Vertical;
+        _inputHorizontal = Joystick.Horizontal;
+        _inputVertitcal = Joystick.Vertical;
 
-        if (playerStats.PlayerHealthPoints <= 0)
+        if (PlayerStats.PlayerHealthPoints <= 0)
         {
             //Debug.Log("DEAD");
-            gameCallbacks.OnGameOver();
+            _gameCallbacks.OnGameOver();
         }
     }
 
     private void FixedUpdate()
     {
-        if (inputHorizontal != 0 || inputVertitcal != 0)
+        if (_inputHorizontal != 0 || _inputVertitcal != 0)
         {
-            if (inputHorizontal != 0 && inputVertitcal != 0)
+            if (_inputHorizontal != 0 && _inputVertitcal != 0)
             {
-                inputHorizontal *= speedLimiter;
-                inputVertitcal *= speedLimiter;
+                _inputHorizontal *= _speedLimiter;
+                _inputVertitcal *= _speedLimiter;
             }
 
-            _rigidbody.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertitcal * walkSpeed);
-        } else
+            Rigidbody.velocity = new Vector2(_inputHorizontal * _walkSpeed, _inputVertitcal * _walkSpeed);
+        }
+        else
         {
-            _rigidbody.velocity = Vector2.zero;
+            Rigidbody.velocity = Vector2.zero;
         }
     }
 
     public void OnHealthDamage(float damage)
     {
-        playerStats.PlayerHealthPoints -= damage;
-        healthBar.OnHealthtChange(playerStats.PlayerHealthPoints, playerStats.PlayerMaxHealthPoints);
+        PlayerStats.PlayerHealthPoints -= damage;
+        _healthBar.OnHealthtChange(PlayerStats.PlayerHealthPoints, PlayerStats.PlayerMaxHealthPoints);
     }
 
+    /** Level system
+     * 1 level - 150 xp
+     * N level - same maxLevelMultiplier (250) for 3 levels
+     * after 3 repits maxLevelMultiplier + 250
+     */
     public void OnExperienceChange(float experience)
     {
-        playerStats.PlayerExperiencePoints += experience;
-        experienceBar.OnExperienceChange(playerStats.PlayerExperiencePoints, playerStats.PlayerMaxExperiencePoints);
+        PlayerStats.PlayerExperiencePoints += experience;
+        _experienceBar.OnExperienceChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+
+        if (PlayerStats.PlayerExperiencePoints >= PlayerStats.PlayerMaxExperiencePoints)
+        {
+            switch (PlayerStats.PlayerLevel)
+            {
+                case 0:
+                    PlayerStats.PlayerLevel = 1;
+                    PlayerStats.PlayerExperiencePoints = 0;
+                    PlayerStats.PlayerMaxExperiencePoints = 250;
+                    PlayerStats.LevelsBeforeScaleCounter = 2;
+                    _experienceBar.OnExperienceChange(PlayerStats.PlayerMaxExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    break;
+                default:
+                    PlayerStats.PlayerLevel++;
+                    PlayerStats.PlayerExperiencePoints = 0;
+
+                    if (PlayerStats.LevelsBeforeScaleCounter != 0)
+                    {
+                        PlayerStats.LevelsBeforeScaleCounter--;
+                    }
+                    else
+                    {
+                        PlayerStats.LevelsBeforeScaleCounter = 2;
+                        PlayerStats.PlayerMaxExperiencePoints += 250;
+                    }
+                    _experienceBar.OnExperienceChange(PlayerStats.PlayerMaxExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    break;
+            }
+        }
     }
 
     public void setGameCallbacks(GameCallbacks gameCallbacks)
     {
-        this.gameCallbacks = gameCallbacks;
+        this._gameCallbacks = gameCallbacks;
     }
 
     //
     // Getters & setters
     public float getPlayerDamage()
     {
-        return playerStats.PlayerDamage;
+        return PlayerStats.PlayerDamage;
     }
 }

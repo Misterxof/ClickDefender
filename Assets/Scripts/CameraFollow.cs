@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Vector3 offset;
-    public Transform myPlay;
+    public Vector3 Offset;
+    public Transform MyPlay;
 
     public void Update()
     {
-        transform.position = myPlay.position + offset;
+        transform.position = MyPlay.position + Offset;
     }
 }

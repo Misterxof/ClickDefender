@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,28 +6,28 @@ namespace Possibilities
 {
     public class SkillDisplay : MonoBehaviour
     {
-        public Skills skill;
+        public Skills Skill;
 
-        public TextMeshProUGUI skillName;
-        public TextMeshProUGUI skillDescription;
-        public Image skillIcon;
-        public TextMeshProUGUI skillAttribute;
-        public TextMeshProUGUI skillAttributeAmount;
-        public TextMeshProUGUI skillPointsNeeded;
+        public TextMeshProUGUI SkillName;
+        public TextMeshProUGUI SkillDescription;
+        public Image SkillIcon;
+        public TextMeshProUGUI SkillAttribute;
+        public TextMeshProUGUI SkillAttributeAmount;
+        public TextMeshProUGUI SkillPointsNeeded;
 
         [SerializeField]
-        private  PlayerStats m_playerHandler;
+        private PlayerStats _playerHandler;
 
         // Start is called before the first frame update
         void Start()
         {
-            m_playerHandler = GameObject.Find("Player").GetComponent<PlayerStats>();
-            m_playerHandler.onExperienceChange += ReactToChange;
-            m_playerHandler.onLevelChange += ReactToChange;
+            _playerHandler = GameObject.Find("Player").GetComponent<PlayerStats>();
+            _playerHandler.onExperienceChange += ReactToChange;
+            _playerHandler.onLevelChange += ReactToChange;
 
-            if (skill)
+            if (Skill)
             {
-                skill.SetValues(this.gameObject, m_playerHandler);
+                Skill.SetValues(this.gameObject, _playerHandler);
             }
 
             EnableSkills();
@@ -38,11 +36,11 @@ namespace Possibilities
         public void EnableSkills()
         {
             //  if player have the skill then show it as enabled
-            if(m_playerHandler && skill && skill.EnableSkill(m_playerHandler))
+            if (_playerHandler && Skill && Skill.EnableSkill(_playerHandler))
             {
                 TurnOnSkillIcon();
             }
-            else if (m_playerHandler && skill && skill.CheckSkill(m_playerHandler))
+            else if (_playerHandler && Skill && Skill.CheckSkill(_playerHandler))
             {
                 this.GetComponent<Button>().interactable = true;
                 this.transform.Find("Icon").Find("Disabled").gameObject.SetActive(false);
@@ -60,12 +58,12 @@ namespace Possibilities
 
         private void OnDisable()
         {
-            m_playerHandler.onExperienceChange -= ReactToChange;
+            _playerHandler.onExperienceChange -= ReactToChange;
         }
 
         public void GetSkill()
         {
-            if (skill.GetSkill(m_playerHandler))
+            if (Skill.GetSkill(_playerHandler))
             {
                 TurnOnSkillIcon();
             }
