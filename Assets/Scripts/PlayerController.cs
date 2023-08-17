@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private PlayerPublisher _publisher;
     // Components
     Rigidbody2D Rigidbody;
     [SerializeField] FixedJoystick Joystick;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats = GetComponent<PlayerStats>();
         _healthBar = new HealthBar(PlayerStats.PlayerHealthPoints, PlayerStats.PlayerMaxHealthPoints);
         _experienceBar = new ExperienceBar(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+        _publisher = PlayerPublisher.GetInstance();
     }
 
     // Update is called once per frame
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerStats.PlayerHealthPoints -= damage;
         _healthBar.OnHealthtChange(PlayerStats.PlayerHealthPoints, PlayerStats.PlayerMaxHealthPoints);
+        _publisher.OnHealthDamage(PlayerStats.PlayerHealthPoints);
     }
 
     /** Level system
@@ -75,7 +78,9 @@ public class PlayerController : MonoBehaviour
     {
         PlayerStats.PlayerExperiencePoints += experience;
         _experienceBar.OnExperienceChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+        _publisher.OnXPChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
 
+        // Level up
         if (PlayerStats.PlayerExperiencePoints >= PlayerStats.PlayerMaxExperiencePoints)
         {
             switch (PlayerStats.PlayerLevel)
@@ -85,7 +90,8 @@ public class PlayerController : MonoBehaviour
                     PlayerStats.PlayerExperiencePoints = 0;
                     PlayerStats.PlayerMaxExperiencePoints = 250;
                     PlayerStats.LevelsBeforeScaleCounter = 2;
-                    _experienceBar.OnExperienceChange(PlayerStats.PlayerMaxExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    _experienceBar.OnExperienceChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    _publisher.OnXPChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
                     break;
                 default:
                     PlayerStats.PlayerLevel++;
@@ -100,7 +106,8 @@ public class PlayerController : MonoBehaviour
                         PlayerStats.LevelsBeforeScaleCounter = 2;
                         PlayerStats.PlayerMaxExperiencePoints += 250;
                     }
-                    _experienceBar.OnExperienceChange(PlayerStats.PlayerMaxExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    _experienceBar.OnExperienceChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
+                    _publisher.OnXPChange(PlayerStats.PlayerExperiencePoints, PlayerStats.PlayerMaxExperiencePoints);
                     break;
             }
         }
